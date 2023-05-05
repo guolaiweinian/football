@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <Properties>
+        <Property name="project-name" value="football-server"/>
+        <Property name="log-path" value="${env:LOG_HOME:-./log}/${project-name}"/>
+        <Property name="log_pattern"
+                  value="%d{yyyy-MM-dd HH:mm:ss.SSS} [JAVA] [${hostName}] [${project-name}] [%-5level] [%t] [%X{traceId}] [%c{1}] - %msg%n"/>
+        <!-- 过滤参数值，替换成***支持格式有："key":"value", 'key':'value', "key"="value", 'key'='value', key='value', key="value" -->
+        <Property name="filter_params"
+                  value="([&quot;']?(${sys:filter_params:-imageIdcard|imageBest|image_data|face_image_path|living_image_data|idCardFrontData|faceImageData|livingImageData|image|video|image_best|image_idcard|firstData|secondData|imageA|imageB|action_video|query_image_content|database_image_content|image_base64|context|faceImage|frameImage|sign|fileBase64|markedImg|IMG_DATA|imgA|imgB|img|password|trade_password|passwordZj|passwordJy|bankPwd|fileData|cropped_image})[&quot;']?)(([:=])([&quot;'][^&quot;']*[&quot;'])|([:=](\[&quot;[^\[&quot;]*&quot;\])))"/>
+    </Properties>
+    <Appenders>
+        <RollingFile name="RollingFile"
+                     fileName="${log-path}/${project-name}.log"
+                     filePattern="${log-path}/%d{yyyy-MM}/${project-name}-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="${log_pattern}">
+                <replace regex="${filter_params}" replacement="$1$4***"/>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100">
+                <Delete basePath="${log-path}" maxDepth="2">
+                    <IfFileName glob="*/${project-name}-*.log.gz"/>
+                    <!-- 最多保存15天 -->
+                    <IfLastModified age="300d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <Console name="Console" target="SYSTEM_OUT"
+                 ignoreExceptions="false">
+            <PatternLayout pattern="${log_pattern}">
+                <replace regex="${filter_params}" replacement="$1$4***"/>
+            </PatternLayout>
+        </Console>
+
+    </Appenders>
+    <Loggers>
+        <Root level="INFO" includeLocation="true">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</configuration>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liaoquanfeng.football.dao.FootballGameMapper">
+  <resultMap id="BaseResultMap" type="com.liaoquanfeng.football.domain.entity.FootballGame">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="ID" jdbcType="NUMERIC" property="id" />
+    <result column="GAME_TYPE" jdbcType="VARCHAR" property="gameType" />
+    <result column="HOME_TEAM_ID" jdbcType="NUMERIC" property="homeTeamId" />
+    <result column="HOME_TEAM_NAME" jdbcType="VARCHAR" property="homeTeamName" />
+    <result column="HOME_TEAM_FIRSTHALF_GOALS" jdbcType="NUMERIC" property="homeTeamFirsthalfGoals" />
+    <result column="HOME_TEAM_GOALS" jdbcType="NUMERIC" property="homeTeamGoals" />
+    <result column="HOME_TEAM_OVERTIME_GOALS" jdbcType="NUMERIC" property="homeTeamOvertimeGoals" />
+    <result column="VISIT_TEAM_ID" jdbcType="NUMERIC" property="visitTeamId" />
+    <result column="VISIT_TEAM_NAME" jdbcType="VARCHAR" property="visitTeamName" />
+    <result column="VISIT_TEAM_FIRSTHALF_GOALS" jdbcType="NUMERIC" property="visitTeamFirsthalfGoals" />
+    <result column="VISIT_TEAM_GOALS" jdbcType="NUMERIC" property="visitTeamGoals" />
+    <result column="VISIT_TEAM_OVERTIME_GOALS" jdbcType="NUMERIC" property="visitTeamOvertimeGoals" />
+    <result column="GAME_DATE" jdbcType="TIMESTAMP" property="gameDate" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    ID, GAME_TYPE, HOME_TEAM_ID, HOME_TEAM_NAME, HOME_TEAM_FIRSTHALF_GOALS, HOME_TEAM_GOALS, 
+    HOME_TEAM_OVERTIME_GOALS, VISIT_TEAM_ID, VISIT_TEAM_NAME, VISIT_TEAM_FIRSTHALF_GOALS, 
+    VISIT_TEAM_GOALS, VISIT_TEAM_OVERTIME_GOALS, GAME_DATE, CREATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.liaoquanfeng.football.domain.entity.FootballGameExample" resultMap="BaseResultMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from T_FOOTBALL_GAME
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.liaoquanfeng.football.domain.entity.FootballGameExample">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    delete from T_FOOTBALL_GAME
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <select id="countByExample" parameterType="com.liaoquanfeng.football.domain.entity.FootballGameExample" resultType="java.lang.Long">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    select count(*) from T_FOOTBALL_GAME
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update T_FOOTBALL_GAME
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=NUMERIC},
+      </if>
+      <if test="record.gameType != null">
+        GAME_TYPE = #{record.gameType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.homeTeamId != null">
+        HOME_TEAM_ID = #{record.homeTeamId,jdbcType=NUMERIC},
+      </if>
+      <if test="record.homeTeamName != null">
+        HOME_TEAM_NAME = #{record.homeTeamName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.homeTeamFirsthalfGoals != null">
+        HOME_TEAM_FIRSTHALF_GOALS = #{record.homeTeamFirsthalfGoals,jdbcType=NUMERIC},
+      </if>
+      <if test="record.homeTeamGoals != null">
+        HOME_TEAM_GOALS = #{record.homeTeamGoals,jdbcType=NUMERIC},
+      </if>
+      <if test="record.homeTeamOvertimeGoals != null">
+        HOME_TEAM_OVERTIME_GOALS = #{record.homeTeamOvertimeGoals,jdbcType=NUMERIC},
+      </if>
+      <if test="record.visitTeamId != null">
+        VISIT_TEAM_ID = #{record.visitTeamId,jdbcType=NUMERIC},
+      </if>
+      <if test="record.visitTeamName != null">
+        VISIT_TEAM_NAME = #{record.visitTeamName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitTeamFirsthalfGoals != null">
+        VISIT_TEAM_FIRSTHALF_GOALS = #{record.visitTeamFirsthalfGoals,jdbcType=NUMERIC},
+      </if>
+      <if test="record.visitTeamGoals != null">
+        VISIT_TEAM_GOALS = #{record.visitTeamGoals,jdbcType=NUMERIC},
+      </if>
+      <if test="record.visitTeamOvertimeGoals != null">
+        VISIT_TEAM_OVERTIME_GOALS = #{record.visitTeamOvertimeGoals,jdbcType=NUMERIC},
+      </if>
+      <if test="record.gameDate != null">
+        GAME_DATE = #{record.gameDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    update T_FOOTBALL_GAME
+    set ID = #{record.id,jdbcType=NUMERIC},
+      GAME_TYPE = #{record.gameType,jdbcType=VARCHAR},
+      HOME_TEAM_ID = #{record.homeTeamId,jdbcType=NUMERIC},
+      HOME_TEAM_NAME = #{record.homeTeamName,jdbcType=VARCHAR},
+      HOME_TEAM_FIRSTHALF_GOALS = #{record.homeTeamFirsthalfGoals,jdbcType=NUMERIC},
+      HOME_TEAM_GOALS = #{record.homeTeamGoals,jdbcType=NUMERIC},
+      HOME_TEAM_OVERTIME_GOALS = #{record.homeTeamOvertimeGoals,jdbcType=NUMERIC},
+      VISIT_TEAM_ID = #{record.visitTeamId,jdbcType=NUMERIC},
+      VISIT_TEAM_NAME = #{record.visitTeamName,jdbcType=VARCHAR},
+      VISIT_TEAM_FIRSTHALF_GOALS = #{record.visitTeamFirsthalfGoals,jdbcType=NUMERIC},
+      VISIT_TEAM_GOALS = #{record.visitTeamGoals,jdbcType=NUMERIC},
+      VISIT_TEAM_OVERTIME_GOALS = #{record.visitTeamOvertimeGoals,jdbcType=NUMERIC},
+      GAME_DATE = #{record.gameDate,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

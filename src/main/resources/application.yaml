@@ -1,0 +1,102 @@
+#服务配置
+server:
+  # 服务端口
+  port: 11000
+  # servlet上下文
+#  servlet:
+#    context-path: /${spring.application.name}
+
+# 日志配置
+logging:
+  # 配置文件地址
+  config: classpath:config/log4j2.xml
+  # 日志级别
+  level:
+    root: INFO
+    org.example.mapper: DEBUG
+
+# 以下配置为高级配置，一般应用不需要调整
+# 监控相关配置
+management:
+  server:
+    servlet:
+      # 监控服务上下文
+      context-path: /${spring.application.name}
+  # 暴露的端点
+  endpoints:
+    web:
+      exposure:
+        # 包含的信息
+        include: health,info,env,metrics,prometheus
+  # 统计配置
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+        step: 5s
+        descriptions: true
+
+spring:
+  # 链路追踪配置
+  sleuth:
+    # 是否开启链路追踪
+    enabled: true
+    # 采样配置
+    sampler:
+      # 采样比例
+      probability: 1.0
+  # zipkin配置
+  zipkin:
+    # 是否开启zipkin客户端
+    enabled: false
+    # zipkin地址
+    base-url: ${SPRING_CLOUD_ZIPKIN_URL:http://192.168.90.135:9411}
+    # 客户端类型
+    sender:
+      # sender类型
+      type: web
+  #数据库配置
+  datasource: #数据源配置
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: THINKIVE_NJ
+    password: Lqf4166416
+
+    #数据库连接池配置
+    type: com.alibaba.druid.pool.DruidDataSource
+  #redis配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    #password:
+    #设置jedis连接池
+    jedis:
+      pool:
+        max-active: 50
+        min-idle: 20
+    #服务名称
+  application:
+    name: football   #服务名
+
+# jasypt配置文件加密配置
+jasypt:
+  encryptor:
+    # jasypt 加密密钥 从环境变量获取 默认为：thinkive
+    password: ${JASYPT_ENCRYPTOR_PASSWORD:thinkive}
+    # 排除version字段 解决导致nacos无法更新配置的bug
+    property:
+      filter:
+        exclude-names: version
+
+#mybatis配置
+mybatis:
+  #开启注解sql查询转驼峰式
+  configuration:
+    map-underscore-to-camel-case: true
+#    jdbc-type-for-null: 'null'
+
+#通用mapper配置
+mapper:
+  not-empty: false
+  identity: sqlserver
